@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RESTFull</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Indo além: RESTFull
+
+Laboratório de Programação
+
+---
+#Definição
+
+- Representational State Transfer
+  - desempenho
+  - escalabilidade
+  - simplicidade
+  - portailidade
+  - confiabilidade
+- Web Services
+  - URI como `http:/api.example.com/usuario`
+
+---
+#Características principais
+  - Cliente-Servidor
+  - Sem estado
+  - Capacidade de cache
+  - Camadas
+  - Possível codificação em demanda
+  - Interface uniforme
+    - identificação em requests
+    - manipulação via representaçãoes
+    - mensagens auto-descritivas 
+    - Hypermedia as the engine of application state (HATEOAS) --> descoberta simples de recursos via links  
+
+
+---
+#REST funciona sobre HTTP
+> Hypertext Transfer Protocol: 
+
+- Clientes e servidores se comunicam trocando mensagens individuais (em oposição a um fluxo de dados).
+ - As mensagens enviadas pelo cliente, geralmente através de navegador da Web, são chamadas de `requests` 
+ - As mensagens enviadas pelo servidor como resposta são chamadas de `responses`.
+
+
+---
+#HTTP
+> Hypertext Transfer Protocol: 
+
+<center>
+<img src="Fetching_a_page.png" width="550">
+</center>
+
+
+---
+#HTTP - Camada
+- Enviado via TCP ou TLS (HTTPS)
+<center>
+  <img src="HTTP_layers.png" width="580">
+</center>
+
+---
+#HTTP - Componentes
+- Cliente: `user-agent`
+  - quem inicializa a `request`
+  - Ex: algum navegador
+
+- Proxies: controla o fluxo
+  - cache, filtro, balance, autenticação, logging
+
+- Web Server
+  - Quem `reponse` a `request`
+  - Apache, Jetty, Nginx ...
+
+
+---
+#HTTP - Características
+ - Simples
+ - Extensível
+ - Sem estado, mas com sessão
+
+
+---
+#HTTP - Mensagens
+
+- Requests
+
+<center>
+  <img src="HTTP_Request.png">
+</center>
+
+---
+#HTTP - Mensagens
+
+- Response
+
+<center>
+  <img src="HTTP_Response.png">
+</center>
+
+
+---
+#HTTP - Métodos
+
+- `GET`: requisita um recurso
+- `HEAD`: idêntico ao `GET` mas sem corpo
+- `POST`: usado para enviar um recurso
+- `PUT`: usado para substituir o estado de um recurso
+- `DELETE`: usado para remover um recurso
+- `CONNECT`: estabele um tunel entre servidor e recurso
+- `OPTIONS`: descreve uma comunicação
+- `TRACE`: teste de lopp-back
+- `PATCH`: usado para aplicar modificações parciais a um objeto
+
+---
+##HTTP - Códigos Comuns
+|  Categoria |  Descrição |
+|--|--|
+| 1xx: Informativo | Comunica informações no nível do protocolo de transferência. |
+| 2xx: Success     | Indica que a solicitação do cliente foi aceita com sucesso. |
+| 3xx: Redirecionamento | Indica que o cliente deve executar alguma ação adicional para concluir sua solicitação. |
+| 4xx: Erro do cliente | Esta categoria de códigos de status de erro aponta o dedo para os clientes. |
+| 5xx: Erro do servidor | O servidor assume a responsabilidade por esses códigos de status de erro.| 
+---
+
+#RESTFull - Métodos
+|  Método |  Num conjunto | Num objeto |  
+|--|--|--|
+|  POST | 201 (criado) | 404 (não encontrado), 409 (conflito) | 
+|  GET  | 200 (OK) | 200 (OK), 404 (não encontrado) |  
+|  PUT  | 405 (método não permitido) | 200 (OK), 204 (sem dados), 404 (não encontrado) |
+|  DELETE | 405 (método não permitido)  | 200 (OK), 404 (não encontrado) |
+
+
+    </textarea>
+    <script src="../../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

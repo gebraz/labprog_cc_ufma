@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Projeto Base nas Aulas</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Projeto Base nas Aulas
+
+Laboratório de Programação
+
+---
+# Ideia
+
+> Ter um mini projeto que será conduzido durante os exemplos em aula
+
+> E também aborde algo de modelagem para realização do projeto
+
+---
+# Proposta
+
+- Gerenciador de Investimentos (Patrimônimo)
+  - isso inclui contas, investimentos, imóveis ...
+
+> Permitir acompanhar mês a mês o aumento (ou não) do patrimônio do usuário
+
+---
+# Funcionalidades esperadas:
+- Permitir que usuário possa se cadastrar para utilizar as funções do sistema
+- Permitir lançar novo investimento, e ainda editar seus dados
+  - Impedir  que um investimento seja apagado caso ele tenha algum saldo no histórico
+- Permitir que investimento seja alterado ao lançar uma nova posição histórica do mesmo (saldo)
+- Visualizar o histórico do lançamento
+
+
+---
+# Visão de Casos de Uso
+<center>
+  <img src="uc.png" width="600">
+</center>
+
+---
+# Escolhas Arquiteturais
+
+- Camadas:
+  - divisão de funcionalidades e responsabilidades
+  - manutenção de código
+  - facilidade de mudanças
+ - Orientada a serviços
+  - `backend` gera serviços
+  - consumidos pelo `frontend`
+
+---
+#Visão Arquitetural
+<center>
+  <img src="arquitetura.png" width="650">
+</center>
+
+---
+#Visão de Classes
+<center>
+  <img src="model.png" width="750">
+</center>
+
+---
+#Visão de Classes
+<center>
+  <img src="service.png" width="750">
+</center>
+
+---
+#Visão de Classes
+<center>
+  <img src="controller.png" width="750">
+</center>
+
+---
+##Visão `Genérica` Atividades
+<center>
+  <img src="atividades.png" width="590">
+</center>
+
+
+
+    </textarea>
+    <script src="../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

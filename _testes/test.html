@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Breve intro à testes</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../style/basic.css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Breve introdução a Testes
+
+Laboratório de Programação
+
+---
+# Porquê?
+
+- Existe muita falha humana durante o processo de desenvolvimento
+- Custos associados a falha justificam um processo de teste cuidadoso
+- Garantia de qualidade
+
+
+---
+# Alguns termos base:
+- `Confiabilidade`: estimativa de execução sem erros
+- `Casos de teste`: cenários específicos de execução
+- `Cobertura de teste`: permitir que uma parcela cada vez maior seja testada
+- `Regressão`: novos códigos não devem influenciar em antigos
+
+---
+# Finalidade:
+- Averiguar se todos os requisitos do sistema foram corretamente implementados
+- Assegurar, na medida do possível, a qualidade e a corretude do software produzido
+- Reduzir custos de manutenção corretiva e re-trabalho
+- Assegurar a satisfação do cliente com o produto desenvolvido
+- Identificar casos de teste de elevada probabilidade para revelar erros ainda não descobertos (com quantidade mínima de tempo e esforço)
+- Verificar a correta integração entre todos os componentes de software
+
+---
+# Padronização
+> Sistemático
+
+> Documentado
+
+> Repetível
+
+
+---
+# Abordagens
+- Funcional (caixa preta)
+  - não se usa o código
+  - testes gerados a partir do relacionamento dos dados
+- Estrutural (caixa branca)
+  - conhecimento do funcionamento interno
+  - objetivo: testar todoas as funcionalidades, relacionamentos ...
+
+---
+# Estágios dos Testes
+- Teste de Unidade
+- Teste de Integração
+- Teste de Sistema
+- Teste de Aceitação
+
+---
+# Estágios dos Testes
+
+Teste de unidade
+- Componentes individuais (ex.: métodos, classes) são testados para assegurar que os mesmos operam de forma correta 
+
+Teste de integração
+- A interface entre as unidades integradas é testada
+
+Teste de sistema
+- Os elementos de software integrados com o ambiente operacional (hardware, pessoas, etc.) são testados como um todo
+
+---
+# Estágios dos Testes
+Testes de aceitação (“caixa preta”) são realizados pelo usuário
+- Finalidade é demonstrar a conformidade com os requisitos do software
+- Envolve treinamento, documentação e empacotamento
+
+Podem ser de duas categorias:
+
+Testes alfa
+- Feitos pelo usuário, geralmente nas instalações do desenvolvedor, que observa e registra erros e/ou problemas
+
+Testes beta
+- Feitos pelo usuário, geralmente em suas próprias instalações, sem a supervisão do desenvolvedor. 
+
+---
+# Teste de Unidade
+
+- Um teste unitário deve ser capaz de examinar o
+comportamento do código sob as mais variadas
+condições
+- sobre unidades de trabalho isoladas, normalmente métodos de uma classe
+  - deve evitar acesso a outros serviços
+  - quando existe o acesso, viram `Teste de Integração`
+- Incentivam o `refactoring`
+- Idealmente deveriam ser automático 
+  - aumentar cobertura
+  - repetição
+
+---
+# Tipos de Teste:
+
+- Teste Funcional: avaliar as funcionalidades e se foram implementadas conforme planejado
+  - testes de unidade, integração e aceitação se encaixam a maioria aqui
+- Teste de recuperação a falhas, segurança, desempenho, carga, integridade de dados, estresse
+- Teste de portabilidade
+- Teste de instalação/desinstalação
+- Teste de interfaces
+- Teste de documentação
+- Teste de regressão
+
+
+
+
+
+
+
+    </textarea>
+    <script src="../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

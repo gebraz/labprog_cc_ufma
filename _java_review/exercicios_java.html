@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alguns Exercícios</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Revisão Java - Alguns Exercícios
+
+Laboratório de Programação
+
+---
+
+#### 1) Atente para as seguintes afirmações e assinale a que for verdadeira.
+
+a) Sobrescrita é quando um método da classe filha dá uma nova implementação ao método de mesmo nome da classe mãe.
+
+b) Java não permite herança múltipla, portanto uma classe mãe não pode ter mais de uma classe filha.
+
+c) Para que um atributo seja herdado pelas classes filhas e não seja acessado externamente, ele deve ser declarado como privado.
+
+d) Um objeto pode ser declarado como do tipo da classe filha e instanciado como sendo da classe mãe.
+
+.footnote[.black.bold[*]ANO: 2018 BANCA: UECE ÓRGÃO: UECE PROVA: PESQUISADOR - INFORMÁTICA - SISTEMA DE SUPORTE DE DECISÃO] 
+
+---
+#### 2) No  POO  com  base  em  classes,  todos  os  objetos  são  instâncias  das  classes  que  descrevem  as  propriedades  (atributos) e os comportamentos (métodos) dos objetos. 
+C Certo?
+
+E Errado?
+
+#### 3) Herança  múltipla  é  a  propriedade  do  POO  que  determina  que  cada  classe  pode  ter  apenas  uma  superclasse, herdando dela métodos e atributos. 
+C Certo?
+
+E Errado?
+
+---
+#### 4) Com base nas boas práticas da programação e manutenção de software orientado a objetos em JAVA, uma programadora deve escolher uma opção para explicitar que um método do cálculo matemático falhou, tendo em vista o estado das entradas ou da aplicação. Qual é essa opção? 
+
+a)Retornar uma constante relacionada a código de erro.
+
+b) Realizar o lançamento de exceção. 
+
+c) Retornar nulo.
+
+d) Imprimir uma mensagem de erro, usando o método System.out.println. 
+
+.footnote[.black.bold[*]ANO: 2018 BANCA: UFG ÓRGÃO: SANEAGO PROVA: ANALISTA - ANALISTA DE SISTEMAS] 
+
+---
+#### 5) A figura a seguir mostra uma associação bidirecional com multiplicidade um-para-um entre as classes A e B. Como você implementaria fisicamente o relacionamento um-paraum entre as classes?
+<center>
+<img src="questao-105027-sepog-ro-2017-fgv-cargo-40379-especialidade-30724-img_01.png" width="300">
+</center>
+
+a) Incluindo uma lista encadeada na classe B contendo objetos do tipo A e métodos públicos em B para adicionar/remover objetos dessa lista
+
+b) Incluindo um atributo em B do tipo A e um atributo em A do tipo B
+
+c) Através de um objeto despachante (dispatcher object) entre as duas classes para armazenar as referências a essas classes
+
+d) Tornando B uma superclasse da classe A
+
+e) Criando métodos de acesso na classe A fortemente acoplados às propriedades da classe B
+
+.footnote[.black.bold[*]ANO: 2017 BANCA: FGV ÓRGÃO: SEPOG-RO PROVA: ANALISTA - ANALISTA EM TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO]
+
+
+----
+#### 6) Se você transforma os atributos públicos de uma classe em atributos privados com métodos de acesso públicos (get/set), esses métodos de acesso 
+
+a) aumentam o desempenho do programa. 
+
+b) diminuem o número total de linhas de código do programa. 
+
+c) reduzem a legibilidade do código. 
+
+d) são mais fáceis de escrever. 
+
+e) podem ser usados para assegurar as regras de negócio.
+
+
+.footnote[.black.bold[*]ANO: 2017 BANCA: FGV ÓRGÃO: SEPOG-RO PROVA: ANALISTA - ANALISTA EM TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO]
+
+---
+#### 7) Considere três classes: Prova, Questão e PerguntaSimples. A classe Prova tem os atributos Data e Assunto, além do método criar(..). A classe Questão tem os atributos  NúmeroDaQuestão e Pergunta, além do método asssociarÀprova(..). A classe PerguntaSimples tem os atributos RespostaCerta e Referência, além do método corrigir(..). De acordo com essa descrição, é possível identificar entre as classes Prova e Questão e entre as classes Questão e PerguntaSimples, respectivamente, os seguintes conceitos da orientação a objetos.
+
+a) especialização e agregação 
+
+b) herança e especialização 
+
+c) agregação e decomposição 
+
+d) agregação e especialização
+
+e) classificação e decomposição
+
+.footnote[.black.bold[*]ANO: 2015 BANCA: CESPE ÓRGÃO: TRE-RS PROVA: ANALISTA JUDICIÁRIO - ANÁLISE DE SISTEMAS]
+
+---
+#### 8) Um dos conceitos mais importantes da orientação a objetos é o de interface. Interfaces podem reduzir o acoplamento entre as classes e tornar o código mais reutilizável. Em Java, as interfaces:
+
+a) podem ou não fornecer implementação de métodos, apesar de ser mais comum implementá-los apenas nas classes que as implementam.
+
+b) podem ser implementadas apenas por classes que utilizam em sua declaração a palavra extends.
+
+c) não podem ter campos de instância, mas permitem a especificação de constantes.
+
+d)podem ser instanciadas de outras classes, desde que estejam no mesmo pacote.
+
+e)podem ter seus objetos convertidos no tipo classe diretamente, sem a realização de typecasting.
+
+.footnote[.black.bold[*]ANO: 2014 BANCA: FCC ÓRGÃO: TRT - 13ª REGIÃO (PB) PROVA: ANALISTA JUDICIÁRIO - TECNOLOGIA DA INFORMAÇÃO]
+
+---
+#### 9) Acerca do uso de qualificador em programação, assinale a opção correta.
+
+a) O qualificador, quando usado na declaração de um objeto, indica que somente os atributos privados podem ser alterados. 
+
+b) Um objeto declarado com o qualificador const não tem acesso a qualquer método. 
+
+c)A definição de função void funcao (const classe1 *obj); indica que a função recebe um ponteiro para um objeto constante. 
+
+d) O uso do qualificador const, na definição de um método, indica que ele só altera os atributos da classe. 
+
+e) Em uma classe definida com o qualificador const. só é possível definir atributos privados.
+
+.footnote[.black.bold[*]ANO: 2010 BANCA: CESPE ÓRGÃO: INMETRO PROVA: PESQUISADOR - CIÊNCIAS DA COMPUTAÇÃO]
+
+---
+#### 10) Em Programação Orientada a Objetos, `Law of Demeter` diz que um método m de um objeto O não deve invocar métodos dos seguintes tipos de objetos: 
+
+a) do próprio O.
+
+b) parâmetros de m. 
+
+c) qualquer objeto criado/instanciado em m.
+
+d) objetos retornados pela chamada de outros métodos.
+
+e) atributos de O.
+
+> When applied to object-oriented programs(...) an object A can request a service (call a method) of an object instance B, but object A should not "reach through" object B to access yet another object
+
+
+.footnote[.black.bold[*]ANO: 2013 BANCA: FGV ÓRGÃO: AL-MT PROVA: ANALISTA DE SISTEMAS - PROGRAMADOR]
+
+    </textarea>
+    <script src="../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

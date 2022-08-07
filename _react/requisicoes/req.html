@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Requisições</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Requisições ao Backend
+
+Laboratório de Programação
+
+---
+# Objetivo 
+
+- Construir requisições usando Axios
+
+- Organizar o código da aplicação
+
+- Continuar o componenente Investimento
+
+---
+## Situação: Componente Investimento
+
+```jsx
+import React from 'react'
+
+
+import InvestimentoTable from './investimentoTable'
+import SectionContent from '../componentes/sectionContent'
+
+
+class Investimento extends React.Component {
+
+
+    render() {
+
+        const data = [
+            {id:1, nome: 'Investimento 1'},
+            {id:2, nome: 'Investimento 2'},
+            {id:3, nome: 'Investimento 3'}
+        ]
+
+        return (
+            <>
+                <div className="content-wrapper">
+                    <section className="content-header">
+                    <div className="container-fluid">
+                        <div className="row mb-2">
+                        <div className="col-sm-6">
+                            <h1>Investimentos</h1>
+                        </div>
+                        </div>
+                    </div>
+                    </section>
+
+
+```
+---
+## Situação: Componente Investimento
+
+```jsx
+                    <SectionContent>
+
+                        <div className="card-body">
+                            <div className="box-header">
+                                <button type="submit" className="btn btn-primary">Adicionar novo investimento</button>
+                            </div>
+                        </div>
+
+                        <InvestimentoTable 
+                                    className="table table-bordered table-hover"
+                                    investimentos={data} />
+                    </SectionContent> 
+                            
+                </div>
+            </>
+        )
+    }
+}
+
+export default Investimento
+```
+
+---
+# Adicionar o axios
+
+- Objetivo: fazer as requisições
+
+- `npm install axios`
+
+- <a href="https://github.com/axios/axios">Site do Axios</a>
+
+
+---
+# Funcionalidade
+
+- Carregar os investimentos no momento que a tela carregar
+
+- Ciclo de vida do React: <a href="https://reactjs.org/docs/state-and-lifecycle.html">State and Lifecycle</a>
+
+ - depois do `render()` podemos executar `componentDidMount` para carregar um objeto
+
+
+---
+# Primeiro:
+
+- Declara um estado:
+
+```jsx
+
+state = {
+        investimentos : []
+    }
+
+```
+
+---
+# Segundo:
+
+- Escreve a função de requisição com o didmount
+
+```jsx
+componentDidMount() {
+    
+}
+```
+
+---
+# Segundo:
+
+- Escreve a chamada get do axios
+  - neste exemplo o usuário está fixo
+
+```jsx
+componentDidMount() {
+    componentDidMount() {
+      axios.get('http://localhost:8080/api/investimentos/obter?usuario=57')
+
+}
+```
+
+
+---
+# Segundo:
+
+- Trata os retornos
+
+```jsx
+componentDidMount() {
+    axios.get('http://localhost:8080/api/investimentos/obter?usuario=57')
+        .then( response => {
+            console.log(response.data)
+            this.setState( {investimentos : response.data} )
+        }).catch (erro => {
+            console.log(erro.response)
+        })
+}
+```
+
+---
+# Terceiro:
+
+- Mude de onde os dados devem vir
+
+```jsx
+<InvestimentoTable 
+      className="table table-bordered table-hover"
+      investimentos={this.state.investimentos} />
+```
+
+---
+# Para executar:
+- Volte ao backend
+  - e habilite o acesso a API
+  - Adicione a anotação `@EnableWebMvc`
+  - e sobrescreva o método `addCorsMappings`
+  - CORS = Cross-origin resource sharing
+
+- Você pode configurar quais serão as origens das requisições e quais deseja aceitar
+
+- <a href="https://spring.io/guides/gs/rest-service-cors/">DOC</a>
+
+---
+# Para executar:
+
+```java
+@SpringBootApplication
+@EnableWebMvc
+public class PatrimonioApplication implements WebMvcConfigurer {
+
+  @Override
+  public void addCorsMappings(CorsRegistry cors) {
+    cors.addMapping("/**")
+        .allowedMethods("GET", "PUT", "DELETE", "POST", "OPTIONS");
+  }
+  public static void main(String[] args) {
+    SpringApplication.run(PatrimonioApplication.class, args);
+  }
+}
+```
+---
+name: inverse
+class: center, middle, main-title
+
+# Organizando as Requisições
+
+---
+# Melhoria:
+
+- Melhor centralizar as requisições do Axios
+- Melhor ter uma camada de serviço que separe código
+
+- Ideia:
+  - Centralizar o Axios em somente um lugar
+  - Fazer classes de serviço que herdam desse lugar e estendem a API
+
+---
+# Um ApiService
+- Classe geral para o Axios
+  - `axios.create` cria uma instância global com alguns parâmeros básicos
+  - assim `baseURL` pode ficar centralizada em apenas 1 lugar
+
+```jsx
+import axios from 'axios'
+
+const instance = axios.create({
+    baseURL: 'http://localhost:8080',
+
+});
+```
+
+---
+# Um ApiService
+
+- A classe aqui é apenas javascript
+
+```jsx
+import axios from 'axios'
+
+const instance = axios.create({
+    baseURL: 'http://localhost:8080',
+
+});
+
+class ApiService {
+
+}
+export default ApiService
+```
+
+---
+# Um ApiService
+- Adicionando um construtor podemos completar a URL
+
+```jsx
+import axios from 'axios'
+
+const instance = axios.create({
+    baseURL: 'http://localhost:8080',
+
+});
+
+class ApiService {
+    constructor (apiUrl) {
+        this.apiUrl = apiUrl
+    }
+}
+export default ApiService
+```
+
+---
+# Um ApiService
+- E agora podemos criar os métodos básicos
+  - o `template string` (crase) nos permite construir a URL concatenando variáveis dentro com `${}`
+
+```jsx
+import axios from 'axios'
+
+const instance = axios.create({
+    baseURL: 'http://localhost:8080',
+
+});
+
+class ApiService {
+    constructor (apiUrl) {
+        this.apiUrl = apiUrl
+    }
+
+    post(url, objeto) {
+        return instance.post(`${this.apiUrl}${url}`, objeto)
+    }
+}    
+```
+
+---
+# Um ApiService
+
+- Todos os métodos
+  - Perceba que o tratamento da promise deve continuar na interface
+
+```jsx
+    post(url, objeto) {
+        return instance.post(`${this.apiUrl}${url}`, objeto)
+    }
+
+    put(url, objeto) {
+        return instance.put(`${this.apiUrl}${url}`, objeto)
+    }
+
+    delete(url) {
+        return instance.delete(`${this.apiUrl}${url}`)
+    }
+
+    get(url) {
+        return instance.get(`${this.apiUrl}${url}`)
+    }
+```
+
+---
+##Criando um InvestimentoService
+
+```jsx
+import ApiService from '../ApiServide'
+
+class InvestimentoService extends ApiService {
+    constructor () {
+        super('/api/investimentos')
+    }
+}
+
+export default InvestimentoService
+```
+
+---
+##Criando um InvestimentoService
+- Adicionando o obter
+
+```jsx
+import ApiService from '../ApiServide'
+
+class InvestimentoService extends ApiService {
+    constructor () {
+        super('/api/investimentos')
+    }
+
+    obterInvestimentos(usuario) {
+        return this.get(`/obter?usuario=${usuario}`)
+    }
+}
+
+export default InvestimentoService
+```
+
+---
+##Modificando o componente Investimento
+
+- 1) Altera o import (remove o axios)
+```jsx
+import InvestimentoService from '../services/InvestimentoService'
+```
+
+- 2) Inclui um construtor - para obter uma instância do service
+```jsx
+    constructor() {
+        super()
+        this.service = new InvestimentoService()
+    }
+```
+
+---
+##Modificando o componente Investimento
+- 3) Altera a chamada - para chamar o service
+
+```jsx
+    componentDidMount() {
+        this.service.obterInvestimentos(57)
+        .then( response => {
+            console.log(response.data)
+            this.setState( {investimentos : response.data} )
+        }).catch (erro => {
+            console.log(erro.response)
+        })
+    }
+```
+
+
+
+
+    </textarea>    
+    <script src="../../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Projeto Base nas Aulas</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Projeto Referências para os Labs
+
+Laboratório de Programação
+
+---
+# Ideia
+
+> Usar a explanação para construção de um projeto durante os labs
+
+---
+# Proposta
+
+- Portal de Egressos
+  - Manter contato com os discentes que finalizaram o curso de Ciência da Computação
+  - Acompanhar no que estão atuando
+
+---
+# Funcionalidades esperadas:
+- Permitir cadastar egresso e manter suas principais informações:
+  - Empresa que trabalha (caso não seja autônomo)
+  - Cargo que atua (dev, analista, ...)
+  - Faixa salarial (uma das opções ...) -- não obrigatória
+  - Curso realizado (Ciência da Computação e Licenciatura em informática - observar que ainda existem os mestrado e doutorado)
+  - Contatos (email, instagram, twiter ...)
+  - Depoimento
+
+---
+# Funcionalidades esperadas:
+- Apresentar um painel de egressos
+  - selecionando aleatoriamente os que devem ser exibidos primeiro
+  - permitir consulta
+- Apresentar depoimentos
+- Mini relatório histórico de cargos + salário
+
+
+---
+# Template Home
+<center>
+  <img src="temp.png" width="400">
+</center>
+
+---
+# Modelo de dados
+<center>
+  <img src="modelo.png" width="850">
+</center>
+
+---
+# Escolhas Arquiteturais
+
+- Camadas:
+  - divisão de funcionalidades e responsabilidades
+  - manutenção de código
+  - facilidade de mudanças
+ - Orientada a serviços
+  - `backend` gera serviços
+  - consumidos pelo `frontend`
+
+---
+#Visão Arquitetural
+<center>
+  <img src="arquitetura.png" width="650">
+</center>
+
+
+---
+##Visão `Genérica` Atividades
+<center>
+  <img src="atividades.png" width="590">
+</center>
+
+
+
+    </textarea>
+    <script src="../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

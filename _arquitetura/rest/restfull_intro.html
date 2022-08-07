@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RESTFull com Spring Boot</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+
+name: inverse
+class: center, middle, main-title
+
+# RESTFull com Spring Boot
+
+---
+#Nossa agenda:
+- Construir um projeto (com vcs)
+- Definir um objeto básico
+- Construir objeto exemplo com todos os métodos
+- Testar
+
+---
+##Objeto básico:
+```java
+
+package main.java.com.example.restfull;
+
+public class Curso {
+    private String id;
+    private String nome;
+
+    public Curso(String id, String nome) {
+        this.nome = nome;
+        this.id = id;
+    }
+
+    public String getId () {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+}
+```
+---
+##Mas seria legal
+- Armazenar esse objeto num banco de dados, mesmo que em memória `H2`
+  - Para isso usamos `@Entity`
+  - O objeto precisa de um construtor padrão vazio ...
+
+```java
+@Entity
+public class Curso {
+    @Id
+    private String id;
+    private String nome;
+
+    public Curso() {
+        
+    }  
+...
+```
+
+---
+## Precisamos configurar o banco na aplicação:
+
+- src/main/resources/application.properties
+
+```java
+server.port=8080
+spring.h2.console.enabled=true
+spring.datasource.platform=h2
+spring.datasource.url=jdbc:h2:mem:curso
+```
+
+---
+## E finalmente implementar um `Repository`
+
+```java
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CursoRepo extends JpaRepository<Curso, String>{
+
+}
+```
+
+---
+##Agora sim, construir métodos:
+
+```java
+
+@RestController
+public class CursoController {
+    //associa automaticamente uma implementação
+    @Autowired
+    private CursoRepo repo;
+
+``` 
+
+---
+##Agora sim, construir métodos:
+
+```java
+
+@RestController
+public class CursoController {
+    
+    @Autowired
+    private CursoRepo repo;
+
+    @RequestMapping("/cursos")
+    public List<Curso> obterCursos() {
+        return repo.findAll();
+    }
+``` 
+
+
+---
+##Agora sim, construir métodos:
+
+```java
+
+@RestController
+public class CursoController {
+    
+    @Autowired
+    private CursoRepo repo;
+
+    @RequestMapping("/cursos")
+    public List<Curso> obterCursos() {
+        return repo.findAll();
+    }
+    @RequestMapping("/curso")
+    public Optional<Curso> obterCursosPorId(@RequestParam("key") 
+                                              String key) {
+        return repo.findById(key);
+    }
+    @RequestMapping("/curso/{key}")
+    public Optional<Curso> obterCursosPorId_(@PathVariable("key") 
+                                             String key) {
+        return repo.findById(key);
+    }
+
+
+``` 
+
+---
+##Para inserir novo, use POST:
+- O método deve receber um `curso` no formato `JSON`
+  - use `@RequestBody` para tranformar o JSON em objeto
+
+```java
+  @PostMapping("/curso")
+  public Curso novo(@RequestBody Curso curso) {
+    repo.save(curso);
+    return curso;
+    }    
+```
+
+---
+##Para atualizar, use PUT:
+
+- O método deve receber um `curso` no formato `JSON`
+  - aqui está explicitamente colocando o formato em `consumes`
+
+```java
+  @PutMapping(path = "/curso", consumes= {"application/json"})
+  public Curso clientsUpdate(@RequestBody Curso curso) {
+    repo.save(curso);
+    return curso;
+  }
+```
+
+---
+##Para remover, use DELETE (versão ruim):
+- A exceção é disparada porque não é possível `serializar` null
+
+```java
+  @DeleteMapping("/curso/{id}")
+  @ResponseBody
+  public Curso remover(@PathVariable("id") String id) {
+    Curso curso = repo.getOne(id);
+    if (curso == null) 
+      return null; //dispara exceção
+    
+    repo.delete(curso);
+    return curso; //dispara execeção
+  }
+```
+
+---
+##Para remover, use DELETE (melhorado):
+- Use `ResponseEntity`. Ele lida com o null
+
+```java
+  @DeleteMapping("/curso/{id}")
+  @ResponseBody
+  public ResponseEntity<Void> remover(@PathVariable("id") String id) {
+        Curso curso = repo.getOne(id);
+        if (curso == null) 
+      return ResponseEntity.notFound().build();
+    repo.delete(curso);
+    return ResponseEntity.noContent().build();
+  }
+```
+
+---
+##Para testar:
+
+> Melhor do que ficar fazendo pelo navegador
+
+- Postman
+
+- Insomnia REST Client
+
+
+    </textarea>
+    <script src="../../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

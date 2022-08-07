@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rotas</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Rotas
+
+Laboratório de Programação
+
+---
+# Objetivo 
+
+- Construir mecanismos de rotas entre componentes
+
+---
+# Pré-Requisito
+
+- Instalar o compoennte `npm install react-router-dom`
+
+---
+# Componente Rotas
+
+```jsx
+import React from 'react'
+import {Route, Routes, HashRouter} from 'react-router-dom'
+
+function Rotas() {
+    return (
+        
+    )
+}
+
+export default rotas
+```
+
+---
+# Componente Rotas
+
+```jsx
+import React from 'react'
+import {Route, Routes, HashRouter} from 'react-router-dom'
+
+
+function Rotas() {
+    return (
+        <HashRouter>
+            <Routes>
+                
+            </Routes>
+        </HashRouter>
+    )
+}
+
+export default rotas
+```
+
+---
+# Componente Rotas
+
+```jsx
+import React from 'react'
+import {Route, Routes, HashRouter} from 'react-router-dom'
+
+import Investimento from './views/investimento'
+import Home from './views/home'
+import Posicao from './views/posicao'
+
+function Rotas() {
+    return (
+        <HashRouter>
+            <Routes>
+                <Route path="/home" element={<Home/>} /> 
+                <Route path="/investimento" element={<Investimento />} />
+                <Route path="/posicao" element={<Posicao />}                 
+            </Routes>
+        </HashRouter>
+    )
+}
+
+export default rotas
+```
+
+---
+# Mude o App.js
+
+- Deve apontar para Rotas
+
+```jsx
+import React from 'react';
+import 'admin-lte/dist/css/adminlte.min.css'
+import 'admin-lte/plugins/fontawesome-free/css/all.min.css' 
+
+import Rotas from './rotas'
+
+class App extends React.Component {
+
+  render() {
+    return (
+      <Rotas/>
+    );
+  }
+}
+
+export default App;
+
+```
+
+---
+# No navegador
+
+- experimente: http://localhost:3000/#/investimento
+
+  - perceba o uso do hash `#`
+  - e depois a rota do componente
+
+---
+# Sidebar
+
+- Como era:
+
+```jsx
+<li className="nav-item has-treeview">
+  <a href="posicao.html" className="nav-link">
+      <i className="nav-icon fas fa-tachometer-alt"></i>
+          <p>Posições</p>
+  </a>
+</li>
+```
+
+---
+# Sidebar
+
+- Como deve ficar:
+
+```jsx
+<li className="nav-item has-treeview">
+  <a href="#/posicao" className="nav-link">
+      <i className="nav-icon fas fa-tachometer-alt"></i>
+          <p>Posições</p>
+  </a>
+</li>
+```
+
+---
+## E novamente, podemos ter um novo o App.js
+
+```jsx
+import React from 'react';
+import 'admin-lte/dist/css/adminlte.min.css'
+import 'admin-lte/plugins/fontawesome-free/css/all.min.css' 
+
+import Rotas from './rotas'
+import Navbar from './components/navbar'
+import Sidebar from './components/sidebar'
+
+class App extends React.Component {
+
+  render() {
+    return (
+      <>        
+        <div className="hold-transition sidebar-mini layout-fixed">
+          <div className="wrapper">
+              <Navbar />
+              <Sidebar />
+          </div>
+        </div>
+        <Rotas/>
+      </>
+    );
+  }
+}
+
+export default App;
+```
+
+---
+#Ampliando para Rotas internas
+  - num botão por exemplo
+
+  - usando `decorator`: `withRouter`
+  ```jsx
+  import {withRouter} from 'react-router-dom'
+  ```
+
+- No Componente:
+```jsx
+export default withRouter(Login)
+```
+
+---
+#Ampliando para Rotas internas
+- No botão:
+
+```jsx
+ entrar = () => {
+        this.props.history.push('/home')
+  }
+
+...
+
+  <button 
+    onClick={this.entrar} 
+    type="submit" 
+    className="btn btn-primary btn-block">
+    Entrar
+  </button>
+
+```
+
+    </textarea>
+    <script src="../../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

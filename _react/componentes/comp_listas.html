@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Componentes com Lista</title>
+    <meta charset="utf-8">
+    <link rel = "stylesheet" type = "text/css" href = "../../style/basic.css" />
+  </head>
+  <body>
+
+    <textarea id="source">
+
+name: inverse
+class: center, middle, main-title
+
+# Componentes com Lista 
+
+Laboratório de Programação
+
+---
+# Objetivo 
+
+- Opção para lidar com componentes que possuem uma lista de itens
+
+  - tabelas, select, ...
+
+---
+# Exemplo com tabelas
+- Dê uma olhada no exemplo do protótipo de investimento.html
+  - ele possui uma tabela
+
+- Você pode se quiser, interar na lista no mesmo arquivo.
+- Mas também pode colocar a tabela num componente
+
+---
+# Tabela como componente
+
+```jsx
+import React from 'react'
+
+function InvestimentoTable (props) {
+  return (
+
+  )
+}
+
+export default InvestimentoTable
+```
+
+
+---
+# Tabela como componente
+
+```jsx
+import React from 'react'
+function InvestimentoTable (props) {
+  return (
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Saldo Total (R$)</th>
+            <th>Última posição (Data)</th>
+            <th>Opções</th>
+        </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+  )
+}
+
+export default InvestimentoTable
+```
+
+
+---
+## Tabela como componente: itens
+- Veja que precisamos preencher o conteúdo do corpo da tabela
+- Podemos receber esse conteúdo por meio do `props`
+  - e criar uma função ou variável que receba essa informação e depois carregue os elementos
+
+```jsx
+const rows = props.investimentos.map(Investimento => {
+    return (
+
+    )
+  }
+)
+```
+
+- a função `map` está pegando o vetor enviado e interando nele via a representação `Investimento`
+  - opcionalmente poderia ser: `props.investimentos.map( (index, Investimento) => {` caso precise da posição do elemento
+
+---
+## Tabela como componente: itens
+
+```jsx
+const rows = props.investimentos.map(Investimento => {
+    return (
+        <tr>
+            <td key={Investimento.id}>{Investimento.nome}</td>
+            <td>{Investimento.saldo}</td>
+            <td>{Investimento.data}</td>
+            <td>
+                <div class="btn-group">
+                    <button onClick="#/"  
+                      type="button" 
+                      className="btn btn-info">Adicionar Posição</button>
+                    <button onClick="#/" 
+                      type="button" 
+                      className="btn btn-warning">Editar</button>
+                    <button  
+                      type="button" 
+                      className="btn btn-danger">Remover</button>
+                </div>   
+            </td>
+        </tr>
+    )
+})
+```
+
+---
+# Voltando a tabela ...
+
+- adicionado as linhas que estão na variável
+
+```jsx
+import React from 'react'
+function InvestimentoTable (props) {
+  return (
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Saldo Total (R$)</th>
+            <th>Última posição (Data)</th>
+            <th>Opções</th>
+        </tr>
+        </thead>
+        <tbody>
+            {rows}
+        </tbody>
+    </table>
+  )
+}
+```
+
+---
+# Voltando a tabela ...
+
+- adicionando os demais `props` da tabela
+
+```jsx
+import React from 'react'
+function InvestimentoTable (props) {
+  return (
+    <table {...props}>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Saldo Total (R$)</th>
+            <th>Última posição (Data)</th>
+            <th>Opções</th>
+        </tr>
+        </thead>
+        <tbody>
+            {rows}
+        </tbody>
+    </table>
+  )
+}
+```
+
+    </textarea>
+    <script src="../../js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
