@@ -335,12 +335,12 @@ public class Curso {
 
 ---
 # Anotação `@ManyToMany`
-- No destino, precisa usar apenas mappedBy
+- No destino, precisa usar apenas mappedBy com o atributo de Curso
 
 ```java
 public class Departamento {
 ...
-  @ManyToMany(mappedBy = "departamento_curso")
+  @ManyToMany(mappedBy = "departamentos")
   Set<Curso> cursos;
 ...
 }```
