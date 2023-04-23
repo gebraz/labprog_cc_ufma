@@ -32,13 +32,13 @@ Laboratório de Programação
 ---
 # Funcionalidades esperadas:
 - Cadastrais:
-  - associar orientação a produção
-  - preencher estatísticas associadas a orientação    
+  - Associar orientação a produção
+  - Preencher estatísticas associadas a orientação    
 
 
 ---
 # Funcionalidades esperadas:
-- Informativas
+- Visualização
   - Índices CAPES: IRestrito, INãoRestrito,  IGeral
   - Produção por Qualis / H5 / Percentile
   - Produção por Docente, Programa
@@ -57,6 +57,26 @@ Laboratório de Programação
 
 
 ---
+# Visão de Casos de uso
+<center>
+  <img src="uc2023.png" width="650">
+</center>
+
+---
+## Atividades - Consultar Dados
+<center>
+  <img src="atividade_consultar.png" width="550">
+</center>
+
+
+---
+## Atividades - Gerenciar Dados
+<center>
+  <img src="atividade-admin.png" width="600">
+</center>
+
+
+---
 # Modelo de dados
 <center>
   <img src="modelo_2023.png" width="650">
@@ -67,19 +87,42 @@ Laboratório de Programação
 
 - <a href="https://dbdiagram.io/d/643326948615191cfa8c86b3">Link no dbdiagram.io</a>
 - <a href="http://nca.ufma.br/~geraldo/labprog/aulas/_doc_projeto/ppgs_ddl.sql">Link DDL</a>
-- 
-
 
 
 ---
-# Visão Arquitetural
+# Funcionalidades
+<center>
+  <img src="servico_2023.png" width="750">
+</center>
 
+
+---
+## Funcionalidades - Controladores esperados
+- Obter programas
+- Para todos os programas
+  - Obter indices capes por programa e período de tempo
+- Para um programa
+  - Obter indices capes
+  - Obter os docentes
+  - Obter tabela produção capes (quantitativos)
+  - Obter tabela técnicas (quantitativos)
+  - Obter orientações (quantitativos)
+
+---
+## Funcionalidades - Controladores esperados
+- Para um Docente
+  - Obter indices capes
+  - Obter tabela produção capes (quantitativos)
+  - Obter tabela técnicas (quantitativos)
+  - Obter orientações (quantitativos)
+  - Detalhar Produções (listagem + estatísticas + produção com discente)
+  - Detalhar Técnicas (listagem + estatísticas + produção com discente)
+  - Detalhar Orientações (listar produções e ténicas vinculadas)
 
 ---
 # Protótipos
 
-
-
+TODO
 
     </textarea>
     <script src="../js/remark-latest.min.js">
