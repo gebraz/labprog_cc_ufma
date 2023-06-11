@@ -155,69 +155,43 @@ class: center, middle, main-title
 hello world
 
 ---
-# Estrutura do componenete React
+# Componenete no React
+
+- `function`
+- inclua `export default` para publicar
+- `return` indica como o componente será renderizado
 
 ```JSX
+export default function Hello() {
+    return (
+        <div>
+            <label>Hello!</label>
+        </div>
+    );
+}
 
-import React from 'react';
-
-...
-
-export default App;
 ```
 
 ---
-#Podem ser funcionais ou de classe
+# Componenete no React
+
+- Adicione o compoenente no `index.js`
+
+DE: 
 
 ```JSX
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-```
-
----
-#Criando nosso hello
-
-- Necessita de apenas 1 nó sempre (`<div>`)
-
-```JSX
-function App() {
-  return (
-    <div className="App">
-      hello world!
-    </div>
-  );
-```
-
----
-#Olhando o index.js 
-
-- Olha onde o 
-
-```JSX
-import App from './App';
-
-ReactDOM.render(
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
+);
+```
+Para: 
+```JSX
+root.render(
+  <React.StrictMode>
+    <Hello />
+  </React.StrictMode>
 );
 ```
 
@@ -228,222 +202,564 @@ ReactDOM.render(
 
 - lembre-se que vc tem que ter efetuado `npm start` antes
 
-
 ---
-#Bacana, mas agora vamos criar um componente nosso
-
-- Podemos fazer como classe tb:
+#Variáveis
+- Você pode declarar variáveis 
 
 ```JSX
-import React from 'react';
-
-class App extends React.Component {
-  
-  render() {
-    return(
-      <div>
-        hello world!
-      </div>
-    )
-  }
+const user = {
+    name : 'Geraldo'
 }
+```
 
-export default App;
+- e usá-las dentro do código com `{ variável }`
+
+```JSX
+const user = {
+    name : 'Geraldo'
+}
+export default function Hello() {
+    return (
+        <div>
+            <label>Hello {user.name}!</label>
+        </div>
+    );
+}
 ```
 
 ---
-#Diferenças
+#Lidando com listas
+- basicamente a lista é construída como um vetor JSON
 
-- Use componenetes funcionais quando não é necessário componentes complexos
+```JSX
+const producao = [
+    {id: 1, titulo:'Artigo 1'},
+    {id: 2, titulo:'Artigo 2'},
+    {id: 3, titulo:'Artigo 3'},
+ ]; 
+```
 
-- Use por classe quando é necessário adicionar mais informações 
+- use `map` para interar nos elementos e construir o componente:
+
+```JSX
+ export default function Listas() {
+    const lstItens = producao.map (producao =>
+        <li key={producao.id}>
+            {producao.titulo}
+        </li>        
+        )
+    return (
+        <ul>{lstItens}</ul>
+    );
+ }
+```
 
 
+---
+##Exemplo similar para Tabela
+
+```JSX
+const producao = [
+    {id: 1, titulo:'Artigo 1'},
+    {id: 2, titulo:'Artigo 2'},
+    {id: 3, titulo:'Artigo 3'},
+ ];
+
+ export default function Tabela() {
+    const lstItens = producao.map (producao =>
+        <tr>
+            <td>{producao.id}</td>
+            <td>{producao.titulo}</td>
+        </tr>
+        )
+    return (
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+            </tr>
+            {lstItens}
+        </table>        
+    );
+ }
+```
+
+---
+##Tabela com click
+
+- Para capturar o evento do click, vamos criar uma função `handleClick`
+```JSX
+    function handleClick(indice) {
+        alert('Você clicou!');
+    }
+```
+- No botão basta ser:
+```JSX
+<button onClick={handleClick}>Botão</button>
+```
+
+- Não se pode passar parâmetro dessa maneira, senão fica num loop
+
+- <b>Mas, e se quiser receber um parâmetro? Use uma função arrow `() =>`</b>
+
+```JSX
+  function handleClick(indice) {
+      alert('Você clicou no ID=' + indice);
+  }
+  ...
+  <button onClick={ () => handleClick(producao.id)}>Ação</button>
+  ...
+```
+
+---
+##Tabela com click
+
+```JSX
+const producao = [
+    {id: 1, titulo:'Artigo 1'},{id: 2, titulo:'Artigo 2'},{id: 3, titulo:'Artigo 3'},
+ ];
+
+ export default function Click() {
+    function handleClick(indice) {
+        alert('Você clicou no ID=' + indice);
+    }
+
+    const lstItens = producao.map (producao =>
+        <tr>
+            <td>{producao.id}</td>
+            <td>{producao.titulo}</td>
+            <td> 
+                <button onClick={ () => handleClick(producao.id)}>Ação</button>
+            </td>
+        </tr>
+        )
+    return (
+        <table> <tr><th>ID</th><th>Título</th><th>Click</th> </tr>
+            {lstItens}
+        </table>        
+    );
+ }
+```
+
+
+---
+#State
+
+- O react fornece mecanismo de estado e gerencimento de variáveis
+- Para utilizar você precisa:
+ - importar `import { useState } from 'react';`
+ - e declarar o estado `const [count, setCount] = useState(0);`
+
+```JSX
+import { useState } from 'react';
+
+export default function Estado() {
+    const [num1, setNum1] = useState(0);
+    const [num2, setNum2] = useState(0);
+    const [soma, setSoma] = useState(0);
+```
+
+- `num1`, `num2`, ... são estados e podem ser obtidos por `{num1}`
+- `setNum1`, `setNum2`, ... são funções para ajuste de valor
+- `useState` é uma função `hook` definida no React. Outros: <a href="https://react.dev/reference/react"> API Hooks</a>
+
+
+---
+#State
+
+- Você pode associar o estado a um componente:
+
+```JSX
+
+    <input type='text' 
+        onChange={e => setNum1(e.target.value)}></input>
+```
+
+- Use a função `arrow` para coletar o evento `e` ao modificar o valor via `onChange`
+- `setNum1` é a função disponibilizada pelo estado acima
+
+
+
+---
+#State
+
+- Podemos adicionar ações como subfunções:
+
+```JSX
+    function somar() {
+        setSoma(Number(num1)+Number(num2));
+    }
+```
+
+- `setSoma` é a atualização do estado
+- `Number(num1)` converter string -> número
+
+- Quando a função é chamada no react, ela não recebe parâmetro
+
+```JSX
+<button onClick={somar}>Somar</button>
+```
+
+
+---
+##State - Completo
+
+```JSX
+import { useState } from 'react';
+
+export default function Estado() {
+    const [num1, setNum1] = useState(0);
+    const [num2, setNum2] = useState(0);
+    const [soma, setSoma] = useState(0);
+
+    function somar() {
+        setSoma(Number(num1)+Number(num2));
+    }
+
+    return (
+        <div>
+            <label>Num1:</label> 
+            <input type='text' 
+                onChange={e => setNum1(e.target.value)}></input>
+            <label>Num2:</label> 
+            <input type='text' 
+                onChange={e => setNum2(e.target.value)}></input>
+            <br></br>
+            <button onClick={somar}>Somar</button>
+            <br></br>
+            <label>Resultado:{soma}</label>
+        </div>
+    );
+}
+```
+
+---
+#Props
+
+- É possível passar informações para o componente por `props`
+
+```JSX
+function Campo ({ value }) {
+    return (
+        <>
+            <label>{value}</label> 
+            <br></br>
+        </>
+    );
+}
+```
+
+- onde é informado via:
+
+```JSX
+<Campo value = "Digite algo:"/>
+```
+
+---
+#Props
+```JSX
+import { useState } from 'react';
+
+export default function Props() {
+    const [texto, setTexto] = useState("");
+    
+    return (
+        <div>
+            <Campo value = "Digite algo:"/>
+            <input type='text' 
+                onChange={e => setTexto(e.target.value)}></input>
+            <Campo value={texto}/>            
+        </div>
+    );
+}
+
+function Campo ({ value }) {
+    return (
+        <>
+            <label>{value}</label> 
+            <br></br>
+        </>
+    );
+}
+```
 ---
 name: inverse
 class: center, middle, main-title
 
-# Usando o gerenciamento de estados
+# Exemplo `Thinking in React`
 
 
 ---
-#State
+# Thinking in React
 
-- O react reconhece automaticamente uma variável dentro do bloco `state`
+- Exemplo de filtragem de conteúdo numa tabela
+<center>
+<img width="300" src="https://react.dev/images/docs/s_thinking-in-react_ui.png"/>
+</center>
+- Disponível completo em: <a href="https://react.dev/learn/thinking-in-react">Link</a>
 
-```JSX
-state = {
-  
-
-}
+---
+# Passos:
+Dado que recebeu o seguinte JSON de resultado:
+```JSON
+[
+  { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
+  { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
+  { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
+  { category: "Vegetables", price: "$2", stocked: true, name: "Spinach" },
+  { category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin" },
+  { category: "Vegetables", price: "$1", stocked: true, name: "Peas" }
+]
 ```
 
+- 1) Transforme a interaface em componentes 
+- 2) Construa uma versão estática
+- 3) Defina a representação do estado 
+- 4) Construa as funcionalidades do estado nos componentes
+
 
 ---
-#State
-
-- exemplo, vamos colocar um nome, e adicioná-lo no nosso hello word
-
-```JSX
-  state = {
-    nome : 'Geraldo'
-  }
-```
-
----
-#State
-
-- por se tratar de um objeto, sempre referencie state usando `this`
-
-```JSX
-  render() {
-    return(
-      <div>
-        hello {this.state.nome}!
-      </div>
-    )
-  }
-
-```
-
----
-#State
-
-- Ampliando
-
-```JSX
-import React from 'react';
-class App extends React.Component {
-  state = {
-    nome : ''
-  }
-
-  render() {
-    return(
-      <div>
-        <label> Nome:</label>
-        <input type="text" value={this.state.nome} />          
-      </div>
-    )
-  }
-}
-export default App;
-```
-
----
-#State
-
-- Podemos brincar com eventos
-  - Obs: a renderização só acontece sobre o que foi modificado, quando modificado
-
-```JSX
-import React from 'react';
-class App extends React.Component {
-  state = {
-    nome : ''
-  }
-
-  render() {
-    return(
-      <div>
-        <label> Nome:</label>
-        <input type="text" value={this.state.nome} 
-          onChange={(e) => this.setState({nome:e.target.value})}/>
-        O nome digitado foi: {this.state.nome}
-      </div>
-    )
-  }
-}
-export default App;
-```
-
----
-#State
-
-- Ok, podemos ir além. Vamos fazer uma soma:
-
-```JSX
-  state = {
-    num1 : null,
-    num2 : null,
-    soma : null
-  }
-```
-
----
-#State
-
-- Ok, podemos ir além. Vamos fazer uma soma:
-
-```JSX
-  render() {
-    return(
-      <div>
-        <label> Nome:</label>
-        <br />
-        <input type="text" value={this.state.num1} 
-          onChange={(e) => this.setState({num1 : e.target.value})}/>        
-        <br />
-         <input type="text" value={this.state.num2} 
-          onChange={(e) => this.setState({num2 : e.target.value})}/>        
-        <br />          
-                  
-      </div>
-    )
-  }
-```
-
----
-#State
-
-- Ok, podemos ir além. Vamos fazer uma soma:
-
-```JSX
-  render() {
-    return(
-      <div>
-        <label> Nome:</label>
-        <br />
-        <input type="text" value={this.state.num1} 
-          onChange={(e) => this.setState({num1 : e.target.value})}/>        
-        <br />
-         <input type="text" value={this.state.num2} 
-          onChange={(e) => this.setState({num2 : e.target.value})}/>        
-        <br />          
-        {this.state.num1} + {this.state.num2} = {this.state.soma}
-        <br />
-        <button onClick={this.somar}>Somar</button>              
-      </div>
-    )
-  }
-```
-
----
-#State
-
-- Ok, podemos ir além. Vamos fazer uma soma:
-
-- Declaramos a `callback` somar como uma `air function`
-```JSX
-  somar = () => {
-    const resultado = parseInt(this.state.num1) 
-                      + parseInt(this.state.num2)
-    this.setState({soma : resultado}) 
-  }
-```
-
----
-#Rode tudo
+# 1) UI para componentes
 
 <center>
-  <img src="somar.png" width="600">
+  <img width="700px" src="https://react.dev/images/docs/s_thinking-in-react_ui_outline.png"/>
 </center>
+
+Hierarquia: FilterableProductTable (SearchBar, ProductTable (ProductCategoryRow, ProductRow))
+
+---
+# 2) Versão Estática
+
+```JSX
+function ProductCategoryRow({ category }) {
+  return (
+    <tr>
+      <th colSpan="2">
+        {category}
+      </th>
+    </tr>
+  );
+}
+```
+
+---
+# 2) Versão Estática
+
+```JSX
+function ProductRow({ product }) {
+  const name = product.stocked ? product.name :
+    <span style={{ color: 'red' }}>
+      {product.name}
+    </span>;
+
+  return (
+    <tr>
+      <td>{name}</td>
+      <td>{product.price}</td>
+    </tr>
+  );
+}
+```
+
+---
+# 2) Versão Estática
+
+```JSX
+function ProductTable({ products }) {
+  const rows = [];
+  let lastCategory = null;
+
+  products.forEach((product) => {
+    if (product.category !== lastCategory) {
+      rows.push(
+        <ProductCategoryRow
+          category={product.category}
+          key={product.category} />
+      );
+    }
+    rows.push(
+      <ProductRow
+        product={product}
+        key={product.name} />
+    );
+    lastCategory = product.category;
+  });
+ 
+ ...
+```
+
+---
+# 2) Versão Estática
+
+```JSX
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </table>
+  );
+}
+```
+
+---
+# 2) Versão Estática
+
+```JSX
+function SearchBar() {
+  return (
+    <form>
+      <input type="text" placeholder="Search..." />
+      <label>
+        <input type="checkbox" />
+        {' '}
+        Only show products in stock
+      </label>
+    </form>
+  );
+}
+```
+
+---
+# 2) Versão Estática
+
+```JSX
+function FilterableProductTable({ products }) {
+  return (
+    <div>
+      <SearchBar />
+      <ProductTable products={products} />
+    </div>
+  );
+}
+```
+
+```JSX
+export default function App() {
+  return <FilterableProductTable products={PRODUCTS} />;
+}
+```
+
+---
+# 3) Definindo os estados
+
+- Quais dados são estado ou propriedades?
+ - Estados quando sofrem modificações
+
+- Estados relacionados a UI
+  - O texto da busca
+  - O valor do checkbox
+
+---
+# 4) Implementando os estados
+
+- Os estados ficam em `FilterableProductTable` por ser hierarquicamente o agregador
+
+```JSX
+function FilterableProductTable({ products }) {
+  const [filterText, setFilterText] = useState('');
+  const [inStockOnly, setInStockOnly] = useState(false);
+
+  ...
+```
+
+---
+# 4) Implementando os estados
+
+- Os estados podem ser passados por `props` para os demais componentes:
+
+```JSX
+function FilterableProductTable({ products }) {
+  const [filterText, setFilterText] = useState('');
+  const [inStockOnly, setInStockOnly] = useState(false);
+
+  return (
+    <div>
+      <SearchBar 
+        filterText={filterText} 
+        inStockOnly={inStockOnly} 
+        onFilterTextChange={setFilterText} 
+        onInStockOnlyChange={setInStockOnly} />
+      <ProductTable 
+        products={products} 
+        filterText={filterText}
+        inStockOnly={inStockOnly} />
+    </div>
+  );
+}
+```
+
+---
+## 4) Implementando os estados
+
+- Você deve atualizar os subcomponentes para refletir a nova situação
+
+```JSX
+function ProductTable({ products, filterText, inStockOnly }) {
+  const rows = [];
+  let lastCategory = null;
+
+  products.forEach((product) => {
+    if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+      return;
+    }
+    if (inStockOnly && !product.stocked) {
+      return;
+    }
+    if (product.category !== lastCategory) {
+      rows.push(
+        <ProductCategoryRow category={product.category} key={product.category} />);
+    }
+    rows.push(
+      <ProductRow product={product} key={product.name} />);
+    lastCategory = product.category;
+  });
+
+  ....
+}
+```
+
+
+---
+## 4) Implementando os estados
+
+- Você deve atualizar os subcomponentes para refletir a nova situação
+
+```JSX
+function SearchBar({
+  filterText,
+  inStockOnly,
+  onFilterTextChange,
+  onInStockOnlyChange
+}) {
+  return (
+    <form>
+      <input 
+        type="text" 
+        value={filterText} placeholder="Search..." 
+        onChange={(e) => onFilterTextChange(e.target.value)} />
+      <label>
+        <input 
+          type="checkbox" 
+          checked={inStockOnly} 
+          onChange={(e) => onInStockOnlyChange(e.target.checked)} />
+        {' '}
+        Only show products in stock
+      </label>
+    </form>
+  );
+}
+```
 
     </textarea>
     <script src="../../js/remark-latest.min.js">
     </script>
     <script>
-      var slideshow = remark.create();
+      var slideshow = remark.create({ ratio: "16:9" });
     </script>
   </body>
 </html>
