@@ -5,6 +5,7 @@ const producao = [
  ];
 
  export default function Click() {
+    
     function handleClick(indice) {
         alert('Você clicou no ID=' + indice);
     }
@@ -14,7 +15,7 @@ const producao = [
             <td>{producao.id}</td>
             <td>{producao.titulo}</td>
             <td> 
-                <button onClick={ () => handleClick(producao.id)}>Ação</button>
+                <button onClick={() => handleClick(producao.id)}>Ação</button>
             </td>
         </tr>
         )
